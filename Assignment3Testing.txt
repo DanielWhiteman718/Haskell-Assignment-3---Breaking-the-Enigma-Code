@@ -1,0 +1,13 @@
+Pos        2   4
+Plain  C O M P U T E R S C I E N C E 
+Input      O   A     
+Output 	       O           
+Cipher Q W A V M Z P N G F Q V G W G
+
+SteckerBoard = [(U,A),(O,M)]
+test1 - [(U,U)] - should succeed - does succeed
+test2 - [(U,A)] - Shouldn't succeed - doesn't succeed
+
+("COMPUTERSCIENCE","QWAVMZPNGFQVGWG")
+
+longestMenu crib^^ = [4,2]
