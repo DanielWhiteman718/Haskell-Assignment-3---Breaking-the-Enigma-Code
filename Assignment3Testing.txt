@@ -11,3 +11,5 @@ test2 - [(U,A)] - Shouldn't succeed - doesn't succeed
 ("COMPUTERSCIENCE","QWAVMZPNGFQVGWG")
 
 longestMenu crib^^ = [4,2]
+
+("AIDEGHMC","TTCMAANO")

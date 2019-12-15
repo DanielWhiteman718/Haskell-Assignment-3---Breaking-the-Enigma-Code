@@ -18,7 +18,7 @@ module Bombe_Testing where
  
  c1 = zip p1 x1
  -- (or (p1, x1) if you defined your crib that way...)
- 
+bombeTesting16Crib = (p1, x1)
 
  {- and the Start position is 0
     then you should find a solution for rotor positions (0,0,0)  
