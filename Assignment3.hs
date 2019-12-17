@@ -7,15 +7,19 @@ import Data.Char
 type SteckerPair = (Char,Char)
 c :: Crib
 c = ("AIDEGHMC","TTCMAANO")
+p :: String
+p = "COMPUTERSCIENCECALIBRATIONSTRINGTESTINGONETWOTHREE"
+s :: Steckerboard
+s = [('L','P'),('C','Q'),('M','R'),('H','S'),('G','T'),('E','U'),('D','V'),('I','W'),('A','X')]
 
 breakEnigma :: Crib -> Maybe (Offsets, Steckerboard)
 --breakEnigma crib = breakEA crib (longestMenu crib) [((fst crib) !! (head(longestMenu crib)),(fst crib) !! (head(longestMenu crib)))] (0,0,0)
-breakEnigma crib = breakEA crib (longestMenu crib) [((fst crib) !! 0,(fst crib) !! 0)] (0,0,0)
+breakEnigma crib = breakEA crib (longestMenu crib) [((fst crib) !! (head (longestMenu crib)),(fst crib) !! (head (longestMenu crib)))] (0,0,0)
 
 breakEA :: Crib -> Menu -> Steckerboard -> Offsets -> Maybe (Offsets, Steckerboard)
-breakEA c m sb ofs |(ofs == (25,25,25)) = if (findStecker c m sb ofs == Nothing) then Nothing
+breakEA c m sb ofs |(ofs == (25,25,25)) = if ((findStecker c m sb ofs) == Nothing) then Nothing
                                           else Just (ofs,fromMaybe(findStecker c m sb ofs))
-                   |(findStecker c m sb ofs == Nothing) = Just (ofs, fromMaybe(findStecker c m sb (incrementOffsets ofs)))
+                   |(findStecker c m sb ofs == Nothing) = breakEA c m sb (incrementOffsets ofs)
                    |otherwise = Just (ofs,fromMaybe(findStecker c m sb ofs))
 
 
@@ -26,7 +30,7 @@ findStecker :: Crib -> Menu -> Steckerboard -> Offsets -> Maybe Steckerboard
 findStecker c m [(x,y)] ofs |((alphaPos x) - (alphaPos y) == 1) = 
                                         if (followMenu c m [(x,y)] ofs == Nothing) then Nothing
                                         else followMenu c m [(x,y)] ofs
-                            |(followMenu c m [(x,y)] ofs == Nothing) = followMenu c m (incrementAlphabet [(x,y)]) ofs 
+                            |(followMenu c m [(x,y)] ofs == Nothing) = findStecker c m (incrementAlphabet [(x,y)]) ofs
                             |otherwise = (followMenu c m [(x,y)] ofs)
 
 testCrib :: Crib
@@ -40,8 +44,8 @@ incrementOffsetsTimes ofs count incTimes | (count == incTimes) = ofs
                                          | otherwise = incrementOffsetsTimes (incrementOffsets ofs) (count + 1) incTimes
 
 followMenu :: Crib -> Menu -> Steckerboard -> Offsets -> Maybe Steckerboard
-followMenu c m sb ofs | length m == 0 = Just sb
-                      | steckerAdd (r,ch) sb == Nothing = Nothing
+followMenu c m sb ofs | (length m == 0) = Just sb
+                      | (steckerAdd (r,ch) sb == Nothing) = Nothing
                       | otherwise = followMenu c (tail m) (fromMaybe (steckerAdd (r, ch) sb)) ofs     
                       where r = enigmaEncode 
                                 (steckerLetter sb ((fst c)!!(head m))) 
