@@ -59,5 +59,6 @@ charPInSteckerBoard l sb | (length sb == 0) = False
                          | otherwise = charPInSteckerBoard l (tail sb)
 
 steckerAdd :: SteckerPair -> Steckerboard -> Maybe Steckerboard
-steckerAdd (x,y) sb | ((charPInSteckerBoard x sb) || (charPInSteckerBoard y sb)) = Nothing
+steckerAdd (x,y) sb | (elem (x,y) sb) || (elem (y,x) sb) = Just sb
+                    | ((charPInSteckerBoard x sb) || (charPInSteckerBoard y sb)) = Nothing
                     | otherwise = Just (sb ++ [(x,y)])
